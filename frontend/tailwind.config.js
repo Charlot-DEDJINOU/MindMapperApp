@@ -1,5 +1,8 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
-export default {
+
+module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
@@ -9,6 +12,12 @@ export default {
       xl: "1280px",
       "1.5xl": "1408px",
       "2xl": "1536px",
+    },
+    colors : {
+      primary : '#2E4BAB',
+      secondary : '#3A9500',
+      tertiaire : '#8E0090',
+      ...colors
     },
     extend: {},
   },
