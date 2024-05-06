@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function InputText ({ label, type, name, value, placeholder, onChange, className }) {
   return (
     <div className={`w-full mb-3 flex flex-col  ${className}`}>
