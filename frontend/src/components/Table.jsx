@@ -1,5 +1,5 @@
 import Button from "./commons/Button"
-import InputText from "./commons/InputText"
+import Input from "./commons/Input"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -24,7 +24,7 @@ export default function Table({
 
     return(
         <div className="w-full h-full border overflow-y-scroll">
-            <InputText placeholder="Rechercher" onChange={search} className="fixed"/>
+            <Input placeholder="Rechercher" onChange={search} className="fixed"/>
             <table className="border-collapse text-center w-full h-full mt-14 border">
                 <thead className="bg-secondary text-white">
                     <tr>
