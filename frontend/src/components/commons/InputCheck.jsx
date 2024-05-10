@@ -1,8 +1,25 @@
-export default function InputCheck({type, label, name, value, className}) {
+import ToggleOffIcon from "../icons/ToogleOffIcon"
+import ToggleOnIcon from "../icons/ToggleOnIcon"
+import { useState } from "react"
+
+export default function InputCheck({type, label, name, value, onChange, error, className}) {
+
+    const [switched , setSwitched] = useState(value);
+
+    const handdleSwitched = () => {
+        setSwitched(!switched)
+        document.getElementById(name).click()
+    }
+
     return(
-        <div className="flex items-center">
-            <input type={type} name={name} value={value} className="block w-5 h-5 bg-primary rounded-md"/>
-            <span className={`block mx-2 font-bold ${className}`}>{label}</span>
+        <div className="flex items-center mb-3">
+            <span className={`hover:cursor-pointer ${switched ? 'text-primary' : 'text-blueGray-900'}`} onClick={handdleSwitched}>
+                {
+                    switched ? <ToggleOnIcon /> : <ToggleOffIcon />
+                }
+            </span>
+            <span className={`block mx-2 ${className}`}>{label}</span>
+            <input id={name} type={type} name={name} value={value} onChange={onChange} hidden/>
         </div>
     )
 }
