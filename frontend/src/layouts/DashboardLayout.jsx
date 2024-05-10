@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
 
-export default function Dashboard ({ children }) {
+export default function DashboardLayout ({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
