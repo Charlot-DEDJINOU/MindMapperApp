@@ -5,6 +5,7 @@ import Footer from "./components/commons/Footer";
 import Home from "./views/Home";
 import NotFound from "./views/NotFound";
 import Login from "./views/Login";
+import Dashboard from "./views/Dashboard";
 
 function App() {
 

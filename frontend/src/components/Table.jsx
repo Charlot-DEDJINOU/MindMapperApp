@@ -7,7 +7,7 @@ import EditIcon from "./icons/EditIcon"
 import TrashIcon from "./icons/TrashIcon"
 
 export default function Table({
-    headColumns = [], bodyColumns = [], data = [], model_url = "", deletedFunction = () => null
+    headColumns = [], bodyColumns = [], data = [], model_url = "", onClick = () => null, deletedFunction = () => null
 }) {
 
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ export default function Table({
                     {
                         items.length > 0 ?
                         items.map((item, indexItem) => (
-                            <tr key={indexItem}>
+                            <tr key={indexItem} onClick={onClick}>
                                 {
                                     bodyColumns.map((key, indexKey) => (
                                         <td key={indexKey} className="border border-slate-300 p-2">{item[key]}</td>
