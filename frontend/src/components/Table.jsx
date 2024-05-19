@@ -1,16 +1,14 @@
 import Button from "./commons/Button"
 import Input from "./commons/Input"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import AddIcon from "./icons/AddIcon"
 import EditIcon from "./icons/EditIcon"
 import TrashIcon from "./icons/TrashIcon"
 
 export default function Table({
-    headColumns = [], bodyColumns = [], data = [], model_url = "", onClick = () => null, deletedFunction = () => null
+    headColumns = [], bodyColumns = [], data = [], model_url = "", actions = false, addFunction,  onClick, editFunction, deletedFunction, className
 }) {
 
-    const navigate = useNavigate()
     const [items, setItems] = useState(data)
 
     const search = (e) => {
@@ -26,13 +24,16 @@ export default function Table({
     }
 
     return(
-        <div className="w-full h-full overflow-y-scroll">
+        <div className={`w-full h-full overflow-y-scroll ${className}`}>
             <div className="flex items-center justify-around">
                 <Input placeholder="Rechercher" onChange={search} />
-                <Button className="w-32 ml-5 mb-2" onClick={() => navigate(`${model_url}create`)}>
-                   <AddIcon />
-                   <span className="ml-2">Nouveau</span>
-                </Button>
+                {
+                    addFunction &&
+                    <Button className="w-32 ml-5 mb-2" onClick={addFunction}>
+                        <AddIcon />
+                        <span className="ml-2">Nouveau</span>
+                    </Button>
+                }
             </div>
             <table className="border-collapse text-center w-full h-full border">
                 <thead className="bg-primary text-white">
@@ -42,23 +43,25 @@ export default function Table({
                                 <th key={index} className="border border-slate-300 p-2">{item.toUpperCase()}</th>
                             ))
                         }
-                        <th className="border border-slate-300 p-2">ACTIONS</th>
+                        {
+                            actions && <th className="border border-slate-300 p-2">ACTIONS</th>
+                        }
                     </tr>
                 </thead>
                 <tbody className="text-black dark:text-white">
                     {
                         items.length > 0 ?
                         items.map((item, indexItem) => (
-                            <tr key={indexItem} onClick={onClick}>
+                            <tr key={indexItem} onClick={() => onClick(item.id)} className={onClick && "hover:cursor-pointer"}>
                                 {
                                     bodyColumns.map((key, indexKey) => (
                                         <td key={indexKey} className="border border-slate-300 p-2">{item[key]}</td>
                                     ))
                                 }
 
-                                {
+                                { actions &&
                                 <td className="border border-slate-300 p-2 flex items-center justify-around">
-                                    <Button className="bg-green-700" onClick={() => navigate(`${model_url}${item.id}`)}>
+                                    <Button className="bg-green-700" onClick={() => editFunction(item.id)}>
                                         <EditIcon />
                                     </Button>
                                     <Button className="bg-danger" onClick={() => deletedFunction(item.id)}>
@@ -69,7 +72,7 @@ export default function Table({
                             </tr>
                         )) :
                         <tr>
-                            <td colSpan={bodyColumns.length + 1} className="text-xl font-bold">Aucun resultat trouvé</td>
+                            <td colSpan={headColumns.length + 1} className="text-xl font-bold">Aucun resultat trouvé</td>
                         </tr>
                     }
                 </tbody>
