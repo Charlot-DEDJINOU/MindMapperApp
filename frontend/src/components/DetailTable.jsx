@@ -1,6 +1,4 @@
-//import React from 'react';
-
-import TableauQuestions from './commons/TableauResponse';
+import TableauQuestions from './TableauResponse';
 
 const questions = [
   { text: 'Question 1', answer: 'oui' },
@@ -15,7 +13,7 @@ const questions = [
 const DetailTable = () => {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center mt-24 mb-20">Tableau de Reponse aux Questions</h1>
+      <h1 className="text-2xl font-bold text-center mt-24 mb-20">Tableau de Reponse aux Questions</h1>
       <TableauQuestions questions={questions} />
     </div>
   );

@@ -1,5 +1,3 @@
-
-
 export default function InvalidateCheck(){
     return(
         <div className="text-danger flex justify-center">

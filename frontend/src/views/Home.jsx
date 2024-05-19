@@ -10,7 +10,7 @@ export default function Home() {
             </header>
             <div className="w-full mt-16 flex items-center justify-center">
                <div className="w-[500px]">
-                    <InputQuestion {...QuestionsData()[0]}/> 
+                    <InputQuestion question={QuestionsData()[0]}/> 
                </div>
             </div>
         </section>
