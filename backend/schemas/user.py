@@ -1,40 +1,31 @@
-from pydantic import BaseModel
-from enum import Enum
-from typing import Dict
-
-class RoleEnum(str, Enum):
-    admin = "admin"
-    manager = "manager"
-    # Ajoutez d'autres rôles au besoin
+from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
-    username: str
+    firstname: str
+    lastname: str
+    email: EmailStr
+    phone: str
+    is_admin: str
     password: str
-    full_name: str
-    email: str
-    
 
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
 class UserCreate(UserBase):
     pass
 
-class User(UserBase):
-    user_id: int
-    role: str
+class UserUpdate(UserBase):
+    pass
+
+class UserOut(BaseModel):
+    id: int
+    firstname: str
+    lastname: str
+    email: EmailStr
+    phone: str
+    is_admin: str
+    full_name: str
 
     class Config:
         orm_mode = True
-        from_attributes=True
-        
-class LoginDataForm(BaseModel): 
-    email :str
-    password : str
-        
-class UserLogin(BaseModel): 
-    data :  LoginDataForm
-    
-class PasswordFormat(BaseModel):
-    user_id: int
-    new_password: str
-    old_password: str
-
-
