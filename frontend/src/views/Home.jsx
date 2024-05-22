@@ -1,8 +1,21 @@
 import QuestionsData from "../data/QuestionsData"
 import InputQuestion from "../components/InputQuestion"
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 export default function Home() {
 
+    const formik = useFormik({
+        initialValues: {
+            question_1 : ''
+        },
+        validationSchema: Yup.object({
+           
+        }),
+        onSubmit: async (values) => {
+           
+        },
+    });
     return(
         <section id="home">
             <header className="h-16 w-full bg-primary text-white text-xl flex justify-center items-center font-bold">

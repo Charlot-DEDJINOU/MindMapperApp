@@ -2,7 +2,7 @@ import ToggleOffIcon from "./icons/ToogleOffIcon";
 import ToggleOnIcon from "./icons/ToggleOnIcon";
 import { useState } from "react"
 
-export default function InputQuestion({question, error, value}) {
+export default function InputQuestion({question, error, value, onChange}) {
 
     const [isChecked, setIsChecked] = useState(value == 0 ? null : value);
 
