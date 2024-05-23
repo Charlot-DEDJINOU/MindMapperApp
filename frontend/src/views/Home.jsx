@@ -24,7 +24,7 @@ export default function Home() {
                     <span className="block text-primary font-bold">Question N°5</span>
                     <Button>Enregistrer</Button>
                 </div>
-                <form className="w-full md:w-[500px] mt-5">
+                <form className="w-full md:w-[500px] mt-5" onSubmit={formik.handleSubmit}>
                     <InputQuestion question={QuestionsData()[0]}/>
                     <div className="flex justify-between mt-5">
                         <span className="text-white bg-bodydark2 w-30 py-2 px-3 rounded-md flex flex-row items-center justify-center hover:cursor-pointer">
