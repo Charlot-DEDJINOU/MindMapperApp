@@ -17,12 +17,17 @@ export default function Home() {
            
         },
     });
+
+    const saveData = () => {
+        localStorage.setItem('data', JSON.stringify(formik.values))
+    }
+
     return(
         <section id="home">
             <div className="bg-white p-10 rounded-md mx-2">
                 <div className="flex items-end justify-between">
                     <span className="block text-primary font-bold">Question N°5</span>
-                    <Button>Enregistrer</Button>
+                    <Button onClick={saveData}>Enregistrer</Button>
                 </div>
                 <form className="w-full md:w-[500px] mt-5" onSubmit={formik.handleSubmit}>
                     <InputQuestion question={QuestionsData()[0]}/>
