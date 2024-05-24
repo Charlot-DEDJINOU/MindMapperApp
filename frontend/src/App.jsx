@@ -15,7 +15,10 @@ function App() {
       <Router>
         <UserProvider>
           <div className="flex flex-col min-h-screen">
-            <main className="flex-grow">
+            <header className="h-16 w-full bg-primary text-white text-xl flex justify-center items-center font-bold">
+                Explication Annagramme 
+            </header>
+            <main className="flex-grow flex items-center justify-center">
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/user-question" element={<Home />} />

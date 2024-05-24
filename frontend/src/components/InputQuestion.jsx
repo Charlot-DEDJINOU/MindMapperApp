@@ -21,21 +21,21 @@ export default function InputQuestion({question, error, value, onChange}) {
             <div className="flex justify-evenly mt-5">
                 <div className="flex items-center">
                     <span 
-                        className={`hover:cursor-pointer ${isChecked ? 'text-primary' : 'text-blueGray-900'}`} 
-                        onClick={() => handleSwitch(true)}
-                    >
-                        {isChecked ? <ToggleOnIcon size={30} /> : <ToggleOffIcon size={30} />}
-                    </span>
-                    <span className="block mx-2 text-green-600 font-bold">OUI</span>
-                </div>
-                <div className="flex items-center">
-                    <span 
                         className={`hover:cursor-pointer ${isChecked != null && !isChecked ? 'text-primary' : 'text-blueGray-900'}`} 
                         onClick={() => handleSwitch(false)}
                     >
                         {isChecked != null && !isChecked ? <ToggleOnIcon size={30} /> : <ToggleOffIcon size={30} />}
                     </span>
                     <span className="block mx-2 text-red-600 font-bold">NON</span>
+                </div>
+                <div className="flex items-center">
+                    <span 
+                        className={`hover:cursor-pointer ${isChecked ? 'text-primary' : 'text-blueGray-900'}`} 
+                        onClick={() => handleSwitch(true)}
+                    >
+                        {isChecked ? <ToggleOnIcon size={30} /> : <ToggleOffIcon size={30} />}
+                    </span>
+                    <span className="block mx-2 text-green-600 font-bold">OUI</span>
                 </div>
                 <input type="checkbox" name={question.identifiant} value={value} onChange={onChange} hidden/>
                 {error && <span className="text-danger">{error}</span>}

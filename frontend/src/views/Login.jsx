@@ -43,8 +43,8 @@ export default function Login() {
     });
 
     return (
-        <section className="w-full h-screen bg-white md:bg-blue-50 flex flex-col items-center justify-center">
-            <div className='my-5 flex items-center'>
+        <section className="w-full bg-white md:bg-blue-50 flex flex-col items-center justify-center py-5">
+            <div className='mb-5 flex items-center'>
                 <img src={logo} className='h-7' alt="Logo" />
                 <span className='text-3xl text-blue-950 font-bold mx-2'>MINDMAPPER</span>
             </div>
