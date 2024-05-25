@@ -1,17 +1,16 @@
 from fastapi import FastAPI
-from models.base import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
+from dotenv import load_dotenv
+
+from database.base import connect_to_mongodb
 from routes.user import  user_router
 
 
 
+load_dotenv()
 
-def create_database():
-    Base.metadata.create_all(bind=engine)
-    
-
-
-create_database()
 app = FastAPI()
 
 
@@ -23,6 +22,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.on_event("startup")
+async def startup_event():
+    mongogb= await connect_to_mongodb(os.getenv("DATABASE_NAME"))
+    print("Connexion à MongoDB établie")
+    
+
 
 app.include_router(user_router)
 
