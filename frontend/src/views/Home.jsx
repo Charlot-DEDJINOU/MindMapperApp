@@ -8,13 +8,13 @@ export default function Home() {
 
     const formik = useFormik({
         initialValues: {
-            question_1 : ''
+            A1 : ''
         },
         validationSchema: Yup.object({
            
         }),
         onSubmit: async (values) => {
-           
+           console.log(values)
         },
     });
 
