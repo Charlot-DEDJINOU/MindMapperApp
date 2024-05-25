@@ -13,6 +13,7 @@ class User(Document):
     lastname = StringField(max_length=255, required=True)
     email = EmailField(unique=True, required=True)
     phone = StringField(max_length=20, required=True)
+    code = StringField(max_length=10, required=True)
     is_admin = StringField(max_length=10, required=True, choices=['a5b1c4d3f2', 'v9w5x8y6z7'])
     password = StringField(max_length=255, required=True)
     
