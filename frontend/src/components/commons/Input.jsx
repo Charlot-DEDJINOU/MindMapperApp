@@ -2,6 +2,8 @@ import EyeIcon from "../icons/EyeIcon";
 import EyeSlashIcon from "../icons/EyeSlashIcon";
 import { useState } from "react";
 
+/* eslint-disable react/prop-types */
+
 export default function Input ({ label, type, name, value, placeholder, onChange, error, className }) {
 
     const [show, setShow] = useState(false)
