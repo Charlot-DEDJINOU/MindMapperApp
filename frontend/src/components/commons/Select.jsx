@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
+
 export default function Select({label, className, name, value, onChange, error, children}){
     return( 
         <div className={`w-full mb-4 flex flex-col ${className}`}>
-            <label className=" mb-2">{ label }</label>
+            <label className="mb-2">{ label }</label>
             <div className="relative">
                 <select name={name} value={value} onChange={onChange} className={`block appearance-none w-full pr-8 rounded-md border border-primary px-4 py-2 bg-slate-200 focus:outline-none focus:border-primary ${error && "border-danger"}`}>
                    <option>Choisir une option</option>
@@ -13,5 +15,5 @@ export default function Select({label, className, name, value, onChange, error, 
             </div>
             {error && <span className="text-danger">{error}</span>}
         </div>
-    )
+    );
 }
