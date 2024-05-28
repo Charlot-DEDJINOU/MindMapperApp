@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import logo from '../../assets/logo.png';
 
+/* eslint-disable react/prop-types */
+
 const BarHistogram = ({ data }) => {
     const canvasRef = useRef(null);
 
