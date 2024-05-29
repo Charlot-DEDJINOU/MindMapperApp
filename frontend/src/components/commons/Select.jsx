@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 export default function Select({label, className, name, value, onChange, error, children}){
     return( 
         <div className={`w-full mb-4 flex flex-col ${className}`}>

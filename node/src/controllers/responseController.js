@@ -94,8 +94,6 @@ exports.responses = async (req, res) => {
   }
 };
 
-const Response = require('../models/Response');
-
 exports.response = async (req, res) => {
   try {
     const { id_link } = req.params;
