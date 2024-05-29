@@ -6,7 +6,6 @@ import Home from "./views/Home";
 import NotFound from "./views/NotFound";
 import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
-import ChartsHistogram from "./components/ChartsHistogram";
 
 function App() {
 
@@ -23,7 +22,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/user-question" element={<Home />} />
                 <Route path="/dashboard/*" element={<Dashboard />} />
-                <Route path="/detail" element={ <ChartsHistogram />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
