@@ -35,7 +35,7 @@ function Content() {
   const { user } = useContext(UserContext);
   return (
     <div className="flex flex-col min-h-screen">
-      {user?.is_admin === "a5b1c4d3f2" && localStorage.getItem('user') != null (
+      {user?.is_admin === "a5b1c4d3f2" && localStorage.getItem('user') == null && (
         <header className="h-16 w-full bg-primary text-white text-xl flex justify-center items-center font-bold">
           Bienvenue {user.firstname + " " + user.lastname}
         </header>

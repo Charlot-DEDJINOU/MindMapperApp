@@ -73,6 +73,7 @@ export default function Home() {
       }
 
     useEffect(() => {
+        localStorage.clear()
         const fetchQuestions = async () => {
             let questionsData = [];
             let questionsSave = {};
