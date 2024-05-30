@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { UserContext } from "./context";
 
-const token = localStorage.getItem('token')
-
 export const UserProvider = ({ children }) => {
-    const [isLogin, setLogin] = useState(token != null)
-    const toggleLogin = () => {
-        setLogin(!isLogin)
+    const [user, setUser] = useState({})
+
+    const toggleUser = (newUser) => {
+        setUser(newUser)
     }
 
     return (
-        <UserContext.Provider value={{ isLogin, toggleLogin }}>
+        <UserContext.Provider value={{ user, toggleUser }}>
             {children}
         </UserContext.Provider>
     )
