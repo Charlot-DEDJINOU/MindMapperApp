@@ -54,7 +54,7 @@ const CreateResponse = () => {
 
             <div className='my-2 py-2'>
             {link && (
-                <div className="w-full flex flex-row justify-center my-5 py-5 mx-[11%] w-[79%]">
+                <div className="w-full flex flex-row justify-center my-5 py-5 mx-[11%] w-[78%]">
                     <span className="bg-slate-300 border border-sky-700 rounded-lg w-full">
                         <div className="flex flex-row">
                             <p ref={linkRef} className="pt-2 px-5 text-black">{link}</p>
