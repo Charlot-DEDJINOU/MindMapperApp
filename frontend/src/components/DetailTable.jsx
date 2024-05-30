@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { getPersonalities } from '../services/personalityService';
 import logo from '../assets/logo.png';
+import { updateResponsePersonality } from '../services/responseService';
 
 const DetailTable = React.forwardRef((props, ref) => {
   const [data, setData] = useState([]);
@@ -14,6 +15,7 @@ const DetailTable = React.forwardRef((props, ref) => {
   const [response, setResponse] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState("Valider personalité")
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('data') || '{}');
@@ -51,8 +53,10 @@ const DetailTable = React.forwardRef((props, ref) => {
       console.log(values)
       setLoading(true);
       try {
-        // Your submission logic here
+         const updateResponse = await updateResponsePersonality({...values, response_id : response.id},response.id)
+         setText("Mise à jour éffectué avec succés")
       } catch (e) {
+        setText("Une erreur s'est produite")
         console.error(e);
       }
       setLoading(false);
@@ -81,13 +85,13 @@ const DetailTable = React.forwardRef((props, ref) => {
                 name="personality_id"
                 onChange={formik.handleChange}
                 value={formik.values.personality_id}
+                error={formik.errors.personality_id}
             >
                 {personalities.map((child, index) => (
                 <option key={index} value={child.id}>{child.name}</option>
                 ))}
             </Select>
-            
-            <Button type="submit" isLoading={loading} className="w-full">Valider la Personnalité</Button>
+            <Button type="submit" isLoading={loading} className="w-full">{text}</Button>
             </form>
         </div>
         <div className="p-2">

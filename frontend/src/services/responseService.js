@@ -35,3 +35,12 @@ export const updateResponse = async (id, data) => {
         handleApiError(error)
     }
 }
+
+export const updateResponsePersonality = async(data, id) => {
+    try{
+        const response = await api.patch('/responses/' + id + '/personality', data)
+        return response.data
+    }catch(e){
+        handleApiError(error)
+    }
+}
