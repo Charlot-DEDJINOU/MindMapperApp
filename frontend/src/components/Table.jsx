@@ -6,7 +6,7 @@ import EditIcon from "./icons/EditIcon"
 import TrashIcon from "./icons/TrashIcon"
 
 export default function Table({
-    headColumns = [], bodyColumns = [], data = [], model_url = "", actions = false, addFunction,  onClick, editFunction, deletedFunction, className
+    headColumns = [], bodyColumns = [], data = [], actions = false, addFunction,  onClick, editFunction, deletedFunction, className
 }) {
 
     const [items, setItems] = useState(data)
@@ -15,7 +15,7 @@ export default function Table({
         const text = e.target.value.toLowerCase()
         setItems(data.filter((item) => {
             for(let i = 0; i < bodyColumns.length; i++){
-                if(item[bodyColumns[i]].toString().toLowerCase().includes(text))
+                if(item[bodyColumns[i]]?.toString().toLowerCase().includes(text))
                     return true
             }
 
@@ -52,19 +52,19 @@ export default function Table({
                     {
                         items.length > 0 ?
                         items.map((item, indexItem) => (
-                            <tr key={indexItem} onClick={() => onClick(item.id)} className={onClick && "hover:cursor-pointer"}>
+                            <tr key={indexItem} onClick={() => onClick(item)} className={onClick && "hover:cursor-pointer"}>
                                 {
                                     bodyColumns.map((key, indexKey) => (
-                                        <td key={indexKey} className="border border-slate-300 p-2">{item[key]}</td>
+                                        <td key={indexKey} className="border border-slate-300 p-2">{item[key] || "null"}</td>
                                     ))
                                 }
 
                                 { actions &&
-                                <td className="border border-slate-300 p-2 flex items-center justify-around">
-                                    <Button className="bg-green-700" onClick={() => editFunction(item.id)}>
+                                <td className="border border-slate-300 p-2 flex flex-wrap items-center justify-around">
+                                    <Button className="bg-green-700 mt-2" onClick={() => editFunction(item)}>
                                         <EditIcon />
                                     </Button>
-                                    <Button className="bg-danger" onClick={() => deletedFunction(item.id)}>
+                                    <Button className="bg-danger mt-2" onClick={() => deletedFunction(item.id)}>
                                         <TrashIcon />
                                     </Button>
                                 </td>
