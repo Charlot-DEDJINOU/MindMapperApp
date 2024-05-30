@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from '../assets/logo.png';
 import Input from '../components/commons/Input';
 import Button from '../components/commons/Button';
 import InputCheck from '../components/commons/InputCheck';
+import AlertSuccess from "../components/commons/AlertSuccess";
+import AlertDanger from "../components/commons/AlertDanger";
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { login } from "../services/authService";
+import { UserContext } from "../context/context";
 
 export default function Login() {
     const navigate = useNavigate();
+    const { toggleUser } = useContext(UserContext)
     const [loading, setLoading] = useState(false)
-
+    const [error, setError] =  useState({
+        display : false,
+        type : 'success',
+        content : ''
+    })
+    
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -33,12 +42,37 @@ export default function Login() {
         },
         onSubmit: async (values) => {
             setLoading(true)
-            console.log(values)
-            const status = await login(values);
-            setLoading(false)
-            if(status == 200) {
-                navigate("/dashboard/societe")
+            try{
+                const user = await login(values);
+                toggleUser(user.user)
+                if(user.user.is_admin == "a5b1c4d3f2"){
+                    setError({
+                        display: true,
+                        type: 'success',
+                        content: 'Connexion reussie avec succés'
+                    });
+                    localStorage.setItem('user', JSON.stringify(user.user))
+                    navigate('/dashboard')
+                }else{
+                    setError({
+                        display: true,
+                        type: 'error',
+                        content: "Vous n'êtes pas un administrateur"
+                    });
+                }
+                formik.resetForm()
+            }catch(e){
+                let content = "Une erreur s\'est produite. Veuillez réessayer plus tard"
+                if(e.response.status == 401){
+                    content = "Mot de passe ou email invalid"
+                }
+                setError({
+                    display: true,
+                    type: 'error',
+                    content: content
+                });
             }
+            setLoading(false)
         },
     });
 
@@ -77,6 +111,8 @@ export default function Login() {
                         onChange={formik.handleChange}
                         value={formik.values.toggle}
                     />
+                    { error.display && error.type === 'error' && <AlertDanger message={error.content} /> }
+                    { error.display && error.type === 'success' && <AlertSuccess message={error.content} /> }
                     <Button className="w-full my-3" type="submit" isLoading={loading}>Connexion</Button>
                 </form>
                 <p className='text-center'>Vous n'avez pas de compte ? <span className='hover:cursor-pointer text-primary' onClick={() => navigate('/register')}>Créer un compte</span></p>

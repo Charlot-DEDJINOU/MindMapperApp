@@ -12,6 +12,7 @@ import GraphUpArrowIncon from '../icons/GraphUpArrowIncon'
 import QuestionIcon from '../icons/QuestionIcon';
 import AddPersonIcon from '../icons/AddPersonIcon';
 import PersonStandingIcon from '../icons/PersonStandingIcon';
+import { logout } from '../../services/authService';
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   
@@ -350,6 +351,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               <li>
                 <NavLink
+                  onClick={logout}
                   to="/login"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('login') &&
