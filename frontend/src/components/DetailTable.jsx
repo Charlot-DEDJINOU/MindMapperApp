@@ -1,61 +1,101 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TableauResponse from './TableauResponse';
 import BarHistogram from './commons/BarHistogram';
 import Button from './commons/Button';
 import Select from './commons/Select';
-
-
-const questions = [
-    { text: 'Question 1', answer: 'oui' },
-    { text: 'Question 2', answer: 'non' },
-    { text: 'Question 3', answer: 'oui' },
-    { text: 'Question 4', answer: 'non' },
-    { text: 'Question 5', answer: 'oui' },
-    { text: 'Question 6', answer: 'non' },
-    { text: 'Question 7', answer: 'oui' },
-];
-
-const childs = [
-    '1 2 3',
-    '1 2 4',
-    '1 2 5',
-    '1 2 6',
-    '1 2 7',
-    '1 2 8',
-    '1 2 9',
-    '1 3 1',
-    '1 3 2',
-    '1 3 3',
-    '1 3 4',
-    '1 3 5',
-];
-
-const data = [30, 40, 90, 60, 80, 70, 20, 70, 40];
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { getPersonalities } from '../services/personalityService';
+import logo from '../assets/logo.png';
 
 const DetailTable = React.forwardRef((props, ref) => {
-    return (
-    <div ref={ref} className='pt-3'>
+  const [data, setData] = useState([]);
+  const [personalities, setPersonalities] = useState([]);
+  const [response, setResponse] = useState({});
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('data') || '{}');
+    setResponse(localData);
+    if (localData.statistique) {
+      const formattedData = Object.values(localData.statistique).map(item => {
+        const [numerator, denominator] = item.split('/').map(Number);
+        return (numerator / denominator) * 100;
+      });
+      setData(formattedData);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const personalitiesData = await getPersonalities();
+        setPersonalities(personalitiesData);
+      } catch (e) {
+        setError(e);
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      personality_id: response.id_personality || '',
+    },
+    validationSchema: Yup.object({
+      personality_id: Yup.string().required('Veuillez sélectionner une personnalité.'),
+    }),
+    onSubmit: async (values) => {
+      console.log(values)
+      setLoading(true);
+      try {
+        // Your submission logic here
+      } catch (e) {
+        console.error(e);
+      }
+      setLoading(false);
+    },
+  });
+
+  if (error) {
+    return <div>Erreur lors du chargement des questions : {error.message}</div>;
+  }
+
+  return (
+    <div ref={ref} className="pt-3 w-full">
+        <div className='flex justify-evenly items-center mt-10 flex-wrap'>
+            <img src={logo} alt="logo" className='w-32 h-12' />
+            <h3 className="text-2xl font-bold text-center">Histogramme du resultat de {response.firstname + " " + response.lastname}</h3>
+        </div>
         <div className="bg-gray-100 min-h-screen flex justify-center items-center mb-5">
             <BarHistogram data={data} />
         </div>
         <div className="pt-5">
-        <form onSubmit={(e) => { e.preventDefault(); }}>
-            <Select label="" className="text-black-2" name="create-response" onChange={null} error="">
-            {childs.map((child, index) => (
-                <option key={index} value={child}>{child}</option>
-            ))}
+            <form onSubmit={formik.handleSubmit}>
+            <p className="text-primary font-bold text-xl">Personnalité</p>
+            <Select
+                label=""
+                className="text-black-2"
+                name="personality_id"
+                onChange={formik.handleChange}
+                value={formik.values.personality_id}
+            >
+                {personalities.map((child, index) => (
+                <option key={index} value={child.id}>{child.name}</option>
+                ))}
             </Select>
-            <div className="flex flex-row justify-evenly mt-5 pt-5">
-                <Button type="submit" isLoading={false} className="w-full">Valider la Personalité</Button>
-            </div>
-        </form>
+            
+            <Button type="submit" isLoading={loading} className="w-full">Valider la Personnalité</Button>
+            </form>
         </div>
         <div className="p-2">
-            <h1 className="text-2xl font-bold text-center mt-24 mb-20">Tableau de Réponse aux Questions</h1>
-            <TableauResponse questions={questions} />
+            <h1 className="text-2xl font-bold text-center my-10">Tableau de Réponse aux Questions</h1>
+            <TableauResponse userAnswer={response.content || {}} />
         </div>
     </div>
-    );
+  );
 });
 
 DetailTable.displayName = 'DetailTable';

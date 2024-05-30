@@ -11,6 +11,7 @@ import Personality from "./Dashboard/Personality";
 import Personalites from "./Dashboard/Personalities";
 
 export default function Dashboard(){
+  
     return (
       <DashboardLayout>
         <Routes>
@@ -23,7 +24,7 @@ export default function Dashboard(){
           <Route path="/responses" element={<Responses />} />
           <Route path="/response" element={ <Response />} />
           <Route path="/response/create" element={ <CreateResponse />} />
-          <Route path="*" element={<p>Momo</p>} />
+          <Route path="*" element={<p>Dashboard</p>} />
         </Routes>
       </DashboardLayout>
     );
