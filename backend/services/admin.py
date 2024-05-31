@@ -2,8 +2,8 @@ from jwt import encode
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional, List
-from models.user import User
-from schemas.user import UserResponse
+from models.admin import Admin
+from schemas.admin import AdminResponse
 import random
 import string
 import os
@@ -33,38 +33,38 @@ def create_access_token(data: dict) -> str:
     return encoded_jwt
 
 
-def create_user(firstname: str, lastname: str, email: str, phone: str, password: str) -> User:
+def create_admin(firstname: str, lastname: str, email: str, phone: str, password: str) -> Admin:
     hashed_password = hash_password(password)
-    user = User(
+    admin = Admin(
         firstname=firstname,
         lastname=lastname,
         email=email,
         phone=phone,
         password=hashed_password
     )
-    print(user)
-    user.save()
-    user_dict = user.to_mongo().to_dict()
-    user_dict['id'] = str(user_dict['_id'])  # Ensure the _id field is a string
-    user_response = UserResponse.parse_obj(user_dict)
-    return user_response
+    print(admin)
+    admin.save()
+    admin_dict = admin.to_mongo().to_dict()
+    admin_dict['id'] = str(admin_dict['_id'])  # Ensure the _id field is a string
+    admin_response = AdminResponse.parse_obj(admin_dict)
+    return admin_response
 
 def login(email: str, password: str) -> Optional[dict]:
-    user = User.objects(email=email).first()
-    if user and verify_password(password, user.password):
-        access_token = create_access_token({"user_id": str(user.id), "user_email": user.email})
-        user_dict = user.to_mongo().to_dict()
-        user_dict['id'] = str(user_dict['_id'])  # Ensure the _id field is a string
-        user_response = UserResponse.parse_obj(user_dict)
-        return {"user": user_response, "access_token": access_token}
+    admin = Admin.objects(email=email).first()
+    if admin and verify_password(password, admin.password):
+        access_token = create_access_token({"admin_id": str(admin.id), "admin_email": admin.email})
+        admin_dict = admin.to_mongo().to_dict()
+        admin_dict['id'] = str(admin_dict['_id'])  # Ensure the _id field is a string
+        admin_response = AdminResponse.parse_obj(admin_dict)
+        return {"admin": admin_response, "access_token": access_token}
     return None
 
 
-def generate_verification_code(user: User) -> str:
+def generate_verification_code(admin: Admin) -> str:
     # Génération d'un code de vérification aléatoire de 6 chiffres
     code = ''.join(random.choices(string.digits, k=6))
     # Mise à jour du champ verification_code dans la base de données
-    user.update(code=code)
+    admin.update(code=code)
     return code
 
 def send_verification_code_email(email: str, code: str) -> None:
@@ -111,50 +111,50 @@ def send_verification_code_email(email: str, code: str) -> None:
         return None
 
 
-def verify_code(user: User, code: str) -> bool:
-    if user.code == code:
-        user.update(is_verified=True, verification_code=None)
+def verify_code(admin: Admin, code: str) -> bool:
+    if admin.code == code:
+        admin.update(is_verified=True, verification_code=None)
         return True
     return False
 
 
-def get_user(user_id: str) -> Optional[User]:
-    user =  User.objects(id=user_id).first()
-    user_dict = user.to_mongo().to_dict()
-    user_dict['id'] = str(user_dict['_id'])  # Ensure the _id field is a string
-    user_response = UserResponse.parse_obj(user_dict)
-    return user_response
+def get_admin(admin_id: str) -> Optional[Admin]:
+    admin =  Admin.objects(id=admin_id).first()
+    admin_dict = admin.to_mongo().to_dict()
+    admin_dict['id'] = str(admin_dict['_id'])  # Ensure the _id field is a string
+    admin_response = AdminResponse.parse_obj(admin_dict)
+    return admin_response
 
-def get_users() -> List[User]:
-    users = User.objects.all()
-    users_response = list()
-    for user in users:
-        user_dict = user.to_mongo().to_dict()
-        user_dict['id'] = str(user_dict['_id'])  
-        users_response.append(UserResponse.parse_obj(user_dict))
+def get_admins() -> List[Admin]:
+    admins = Admin.objects.all()
+    admins_response = list()
+    for admin in admins:
+        admin_dict = admin.to_mongo().to_dict()
+        admin_dict['id'] = str(admin_dict['_id'])  
+        admins_response.append(AdminResponse.parse_obj(admin_dict))
     
-    return users_response
+    return admins_response
     
 
-def update_user(user_id: str, user_data: dict) -> Optional[User]:
-    user = User.objects(id=user_id).first()
-    if not user:
+def update_admin(admin_id: str, admin_data: dict) -> Optional[Admin]:
+    admin = Admin.objects(id=admin_id).first()
+    if not admin:
         return None
-    update_data = user_data.dict(exclude_unset=True)
+    update_data = admin_data.dict(exclude_unset=True)
     if "password" in update_data:
         update_data["password"] = hash_password(update_data["password"])
-    user.update(**update_data)
-    user.reload()
-    user_dict = user.to_mongo().to_dict()
-    user_dict['id'] = str(user_dict['_id'])  
-    return UserResponse.parse_obj(user_dict)
+    admin.update(**update_data)
+    admin.reload()
+    admin_dict = admin.to_mongo().to_dict()
+    admin_dict['id'] = str(admin_dict['_id'])  
+    return AdminResponse.parse_obj(admin_dict)
 
-def delete_user(user_id: str) -> Optional[User]:
-    user = User.objects(id=user_id).first()
-    if user:
-        user.delete()
-        user_dict = user.to_mongo().to_dict()
-        user_dict['id'] = str(user_dict['_id'])  
-        return UserResponse.parse_obj(user_dict)
+def delete_admin(admin_id: str) -> Optional[Admin]:
+    admin = Admin.objects(id=admin_id).first()
+    if admin:
+        admin.delete()
+        admin_dict = admin.to_mongo().to_dict()
+        admin_dict['id'] = str(admin_dict['_id'])  
+        return AdminResponse.parse_obj(admin_dict)
     return None
 
