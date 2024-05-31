@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from database.base import init_db
 from routes.auth import auth_router
 from routes.user import user_router
+from routes.question import question_router
+from routes.personality import personality_router
+from routes.response import response_router
 
 
 
@@ -18,13 +21,13 @@ app = FastAPI(
     description="Une api pour la gestion d'utilisateurs pour un cabinet Psy",
     version="1.0.0",
     contact={
-        "name": "Your Name",
-        "url": "http://your-website.com/contact",
-        "email": "your-email@domain.com",
+        "name": "Mathias KINNINKPO",
+        "url": "https://mathias-kinninkpo.netlify.app",
+        "email": "mathiaskin2003@gmail.com",
     },
     license_info={
-        "name": "MIT License",
-        "url": "https://opensource.org/licenses/MIT",
+        "name": "MMA License",
+        "url": "https://opensource.org/licenses/MMA",
     },
 )
 
@@ -38,7 +41,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-routers = [auth_router, user_router]
+routers = [auth_router, user_router, question_router, personality_router, response_router]
 for router in routers:
     app.include_router(router)
 
@@ -58,5 +61,5 @@ async def startup_event():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="192.168.1.88", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
