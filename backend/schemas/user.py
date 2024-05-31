@@ -1,40 +1,43 @@
-from pydantic import BaseModel
-from enum import Enum
-from typing import Dict
-
-class RoleEnum(str, Enum):
-    admin = "admin"
-    manager = "manager"
-    # Ajoutez d'autres rôles au besoin
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+from pydantic import BaseModel, EmailStr, Field
+from .base import PyObjectId
+from bson import ObjectId
 
 class UserBase(BaseModel):
-    username: str
+    firstname: str
+    lastname: str
+    email: EmailStr
+    phone: str
+
+class UserCreateRequest(UserBase):
     password: str
-    full_name: str
-    email: str
-    
 
-class UserCreate(UserBase):
-    pass
+class UserUpdateRequest(UserBase):
+    password: Optional[str] = None
 
-class User(UserBase):
-    user_id: int
-    role: str
+class UserResponse(UserBase):
+    id: str = Field(..., alias='id', example="60d5f446f1b8e6c7b4efddf3")
+    is_verified: bool
+    is_admin: str
 
     class Config:
-        orm_mode = True
         from_attributes=True
+        allow_population_by_field_name = True
+        json_encoders = {
+            ObjectId: str
+        }
         
-class LoginDataForm(BaseModel): 
-    email :str
+class UserLogin(BaseModel):
+    email: str
     password : str
-        
-class UserLogin(BaseModel): 
-    data :  LoginDataForm
     
-class PasswordFormat(BaseModel):
-    user_id: int
-    new_password: str
-    old_password: str
-
-
+class VerificationCodeRequest(BaseModel):
+    email : str
+    
+class VerificationCodeRequest(BaseModel):
+    email : str
+    
+class VerificationCodeResponse(BaseModel):
+    email : str
+    code: str

@@ -1,18 +1,32 @@
 from fastapi import FastAPI
-from models.base import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
-from routes.user import  user_router
+from fastapi.staticfiles import StaticFiles
+import os
+from dotenv import load_dotenv
+
+from database.base import init_db
+from routes.auth import auth_router
+from routes.user import user_router
 
 
 
 
-def create_database():
-    Base.metadata.create_all(bind=engine)
-    
+load_dotenv()
 
-
-create_database()
-app = FastAPI()
+app = FastAPI(
+    title="Mind Mapper App",
+    description="Une api pour la gestion d'utilisateurs pour un cabinet Psy",
+    version="1.0.0",
+    contact={
+        "name": "Your Name",
+        "url": "http://your-website.com/contact",
+        "email": "your-email@domain.com",
+    },
+    license_info={
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT",
+    },
+)
 
 
 # Middleware pour autoriser les requêtes CORS 
@@ -24,7 +38,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user_router)
+routers = [auth_router, user_router]
+for router in routers:
+    app.include_router(router)
+
+
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.on_event("startup")
+async def startup_event():
+    init_db()
+    print("Connexion à MongoDB établie")
+    
+
 
 
 
