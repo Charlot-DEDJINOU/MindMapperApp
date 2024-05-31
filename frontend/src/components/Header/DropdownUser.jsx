@@ -48,7 +48,7 @@ export default function DropdownUser() {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Charlot DEDJINOU
+            {JSON.parse(localStorage.getItem('user'))?.firstname + " " + JSON.parse(localStorage.getItem('user'))?.lastname}
           </span>
         </span>
         <span className="h-12 w-12 rounded-full border flex justify-center items-center">

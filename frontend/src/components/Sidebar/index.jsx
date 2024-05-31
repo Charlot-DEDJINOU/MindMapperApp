@@ -12,6 +12,7 @@ import GraphUpArrowIncon from '../icons/GraphUpArrowIncon'
 import QuestionIcon from '../icons/QuestionIcon';
 import AddPersonIcon from '../icons/AddPersonIcon';
 import PersonStandingIcon from '../icons/PersonStandingIcon';
+import { logout } from '../../services/authService';
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   
@@ -143,7 +144,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li>
                             <NavLink
-                              to="/dashboard/create_response"
+                              to="/dashboard/response/create"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -206,7 +207,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li>
                             <NavLink
-                              to="/dashboard/create_question"
+                              to="/dashboard/question/create"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -225,7 +226,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/dashboard/personalites' || pathname.includes('personalites')
+                  pathname === '/dashboard/personalites' || pathname.includes('personal')
                 }
               >
                 {(handleClick, open) => {
@@ -235,7 +236,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/dashboard/personalities' ||
-                            pathname.includes('personalities')) &&
+                            pathname.includes('personali')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -269,7 +270,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li>
                             <NavLink
-                              to="/dashboard/create_personality"
+                              to="/dashboard/personality/create"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -307,9 +308,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/create_user"
+                    to="/dashboard/user/create"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('create_user') && 'bg-graydark dark:bg-meta-4'
+                      pathname.includes('/user/create') && 'bg-graydark dark:bg-meta-4'
                     }`}
                   >
                     <AddPersonIcon />
@@ -350,6 +351,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               <li>
                 <NavLink
+                  onClick={logout}
                   to="/login"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('login') &&

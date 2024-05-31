@@ -18,7 +18,7 @@ export default function InputCheck({type, label, name, value, onChange, error, c
                     switched ? <ToggleOnIcon /> : <ToggleOffIcon />
                 }
             </span>
-            <span className={`block mx-2 ${className}`}>{label}</span>
+            <span className={`block mx-2 ${className} ${error && 'text-danger'}`}>{error ? error : label}</span>
             <input id={name} type={type} name={name} value={value} onChange={onChange} hidden/>
         </div>
     )

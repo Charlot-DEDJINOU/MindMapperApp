@@ -1,5 +1,3 @@
-
-
 export default function ValideCheck(){
     return(
         <div className="text-success flex justify-center">

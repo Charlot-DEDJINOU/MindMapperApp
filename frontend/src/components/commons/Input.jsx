@@ -2,7 +2,7 @@ import EyeIcon from "../icons/EyeIcon";
 import EyeSlashIcon from "../icons/EyeSlashIcon";
 import { useState } from "react";
 
-export default function Input ({ label, type, name, value, placeholder, onChange, error, className }) {
+export default function Input ({ label, type, name, value, placeholder, onChange, error, className, disabled }) {
 
     const [show, setShow] = useState(false)
 
@@ -16,6 +16,7 @@ export default function Input ({ label, type, name, value, placeholder, onChange
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                disabled={disabled}
                 className={`w-full rounded-md border border-blue-950 px-4 py-2 bg-slate-200 focus:outline-none focus:border-primary ${error && "border-danger"}`}
             />
             {
