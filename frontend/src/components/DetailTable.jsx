@@ -19,6 +19,7 @@ const DetailTable = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('data') || '{}');
+    formik.setFieldValue('id_personality', localData.id_personality || '');
     setResponse(localData);
     if (localData.statistique) {
       const formattedData = Object.values(localData.statistique).map(item => {

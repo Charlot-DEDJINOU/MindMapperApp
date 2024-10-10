@@ -41,6 +41,7 @@ export const updateResponsePersonality = async(data, id) => {
         const response = await api.patch('/responses/' + id + '/personality', data)
         return response.data
     }catch(e){
+        console.log(e)
         handleApiError(error)
     }
 }
