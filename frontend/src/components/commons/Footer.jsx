@@ -4,7 +4,7 @@ export default function Footer() {
             <div className="container flex flex-col items-center">
                 <b className="text-center mb-3 text-3xl text-secondary">Ennéagramme</b>
                 <p className="text-center"> L’être humain à le potentiel de devenir quelque chose d’autre - David Goggins</p>
-                <div className="copyright my-4">
+                <div className="copyright my-4 text-center">
                     &copy; Copyright <strong><span>Ennéagramme </span></strong>All Rights Reserved 
                 </div>
                 <div className="text-center">

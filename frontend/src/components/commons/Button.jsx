@@ -7,7 +7,7 @@ export default function Button({onClick, className, isLoading = false, children}
                 isLoading ? (
                     <>
                         <ReloadIcon className="animate-spin"/>
-                        <span className="block mx-2">Loading...</span>
+                        <span className="block mx-2">Chargement...</span>
                     </>
                 ) : children
             }
