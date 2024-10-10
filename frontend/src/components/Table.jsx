@@ -1,6 +1,6 @@
 import Button from "./commons/Button"
 import Input from "./commons/Input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AddIcon from "./icons/AddIcon"
 import EditIcon from "./icons/EditIcon"
 import TrashIcon from "./icons/TrashIcon"
@@ -23,6 +23,8 @@ export default function Table({
         }))
     }
 
+    useEffect(() => setItems(data), [data]);
+    
     return(
         <div className={`w-full h-full overflow-y-scroll ${className}`}>
             <div className="flex items-center justify-around">
