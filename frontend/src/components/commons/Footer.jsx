@@ -9,7 +9,7 @@ export default function Footer() {
                 </div>
                 <div className="text-center">
                     Created by
-                    <a href="https://charlot-dedjinou.vercel.app" className="font-bold"> Charlot DEDJINOU - </a>
+                    <a href="https://charlotdedjinou.com" className="font-bold"> Charlot DEDJINOU - </a>
                     <a href="" className="font-bold"> Mathias KINNINKPO - </a>
                     <a href="" className="font-bold"> Thierry TCHONKLOE</a>
                 </div>
