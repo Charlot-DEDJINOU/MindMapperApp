@@ -1,8 +1,51 @@
-# React + Vite
+# Mind Mapper App — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the React + Vite frontend for the Mind Mapper App. It implements the application UI, routing, authentication flow, and dashboard views.
 
-Currently, two official plugins are available:
+## Key features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 18 with Vite
+- React Router v6 for client-side routing
+- Tailwind CSS for styling
+- Axios for API communication
+- Form validation with Formik and Yup
+- Chart.js chart components and custom UI components
+
+## Installation
+
+```bash
+cd frontend
+npm install
+```
+
+## Run locally
+
+```bash
+npm run dev
+```
+
+## Build for production
+
+```bash
+npm run build
+```
+
+## Preview production build
+
+```bash
+npm run preview
+```
+
+## Project structure
+
+- `src/App.jsx` — main app component and route definitions
+- `src/main.jsx` — Vite entry file
+- `src/components/` — reusable UI components and layout pieces
+- `src/context/` — user session and auth context
+- `src/services/` — API service wrappers
+- `src/views/` — page views for home, login, dashboard, and error handling
+- `src/styles/` — global CSS and Tailwind utilities
+
+## Notes
+
+The frontend expects the backend API to expose authentication endpoints and data endpoints for users, questions, personalities, and responses. Adjust the API base URL in `src/services/api.js` if needed.
